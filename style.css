@@ -1,0 +1,440 @@
+/* === CSS変数 (色の管理) === */
+:root {
+    --bg-dark: #0A0A0A;          /* より暗い背景のベース色 */
+    --bg-light: #181818;         /* コンテンツエリアの背景色 */
+    --primary-text: #E0E0E0;    /* 主要なテキスト色 */
+    --secondary-text: #B0B0B0;  /* 補助的なテキスト色 */
+    --accent-color: #D4AF37;    /* シャンパンゴールドのような色 */
+    --accent-light: #FFD700;    /* ホバー時の明るいゴールド */
+    --font-heading: 'Poppins', 'Noto Serif JP', serif;
+    --font-body: 'Noto Serif JP', serif;
+}
+
+/* === 基本リセット & 全体設定 === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: var(--bg-dark); /* より暗いベース色 */
+    color: var(--primary-text);
+    font-family: var(--font-body);
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    overflow-x: hidden; /* 横スクロールバーが出ないように */
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px; /* 少し広げてゆったりと */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* === セクション共通スタイル === */
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 3.5rem; /* 少し大きく */
+    font-weight: 700;
+    color: var(--primary-text);
+    text-align: center;
+    letter-spacing: 3px; /* 文字間隔を広げて高級感を */
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2rem; /* 少し大きく */
+    color: var(--accent-color);
+    font-weight: 700;
+    margin-bottom: 60px; /* 間隔を広げてゆったりと */
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+}
+
+/* === 1. 自己紹介 (Hero) セクション === */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+
+    /* ▼▼▼ 「初期の感じ」のグラデーション + 画像 ▼▼▼ */
+    /* 上部を80%の黒で覆い、下部(100%)に向かって完全な黒にフェードさせる */
+    background: 
+        linear-gradient(rgba(10, 10, 10, 0.8) 0%, rgba(10, 10, 10, 1) 100%), 
+        url(https://images.unsplash.com/photo-1510519138101-570d1dca3d66?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1447);
+    
+    background-size: cover;
+    background-position: center;
+    /* (パララックス効果が必要な場合は、次の行のコメントを外してください) */
+    /* background-attachment: fixed; */
+}
+
+/* (::before と @keyframes background-pulse は削除) */
+
+
+.hero-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(2.2rem, 8.5vw, 5rem); 
+    font-weight: 700;
+    color: var(--primary-text);
+    margin-bottom: 10px;
+    line-height: 1.1;
+    text-shadow: 0 0 15px rgba(212,175,55,0.3);
+}
+
+.hero-specialty {
+    font-family: var(--font-heading);
+    font-size: clamp(0.9rem, 3.5vw, 1.4rem); 
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--secondary-text);
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 2;
+}
+
+.scroll-down {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    opacity: 0.8;
+    writing-mode: vertical-rl;
+    font-family: var(--font-heading);
+    z-index: 1;
+}
+
+.scroll-down::after {
+    content: '';
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 50px;
+    background: var(--accent-color);
+    animation: scroll-indicator 2.5s infinite cubic-bezier(1, 0, 0, 1);
+}
+
+@keyframes scroll-indicator {
+    0% {
+        height: 0;
+        top: 70px;
+    }
+    50% {
+        height: 50px;
+        top: 70px;
+    }
+    100% {
+        height: 0;
+        top: 120px;
+    }
+}
+
+
+/* === 2. ポートフォリオ（実績）セクション === */
+.portfolio-section {
+    padding: 120px 0;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); 
+    gap: 40px;
+}
+
+.portfolio-item:first-child {
+    grid-column: auto; 
+}
+
+.portfolio-item {
+    background-color: var(--bg-light);
+    border-radius: 12px;
+    padding: 35px;
+    border: 1px solid rgba(212,175,55,0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease, 
+                box-shadow 0.4s ease, 
+                border-color 0.4s ease,
+                background-color 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.portfolio-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.portfolio-item:hover::before {
+    opacity: 1;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 
+                0 0 25px rgba(212,175,55,0.2);
+    border-color: var(--accent-color);
+}
+
+.portfolio-item:hover .video-responsive iframe {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(212,175,55,0.2);
+}
+
+.channel-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.channel-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    margin-right: 20px;
+    object-fit: cover;
+    background-color: var(--secondary-text);
+    flex-shrink: 0;
+}
+
+.channel-info {
+    flex: 1;
+}
+
+.channel-name {
+    font-family: var(--font-heading);
+    font-size: 1.7rem;
+    color: var(--accent-color);
+    margin-bottom: 2px;
+    line-height: 1.4;
+}
+
+.channel-subs {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--secondary-text);
+    margin-bottom: 0px;
+    font-family: var(--font-heading);
+}
+
+.channel-description {
+    color: var(--secondary-text);
+    margin-bottom: 30px;
+}
+
+.video-responsive {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #000;
+}
+
+.video-responsive iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* === 3. お問い合わせセクション === */
+.contact-section {
+    padding: 120px 0;
+    background-color: var(--bg-light);
+    text-align: center;
+}
+
+.contact-description {
+    color: var(--secondary-text);
+    max-width: 650px;
+    margin: 0 auto 50px auto;
+    font-size: 1.1rem;
+    line-height: 2;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--bg-dark);
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 18px 50px;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button:hover {
+    background-color: var(--accent-light);
+    transform: scale(1.07);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 
+                0 0 15px rgba(255,215,0,0.3);
+}
+
+
+/* === フッター === */
+.footer {
+    padding: 50px 0;
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 0.95rem;
+    border-top: 1px solid #222;
+}
+
+
+/* === レスポンシブ対応 (スマホ) === */
+@media (max-width: 768px) {
+    body {
+        letter-spacing: normal;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+
+    /* ▼▼▼ .hero-name, .hero-specialty の font-size 指定を削除 (clamp()が効くため) ▼▼▼ */
+    /*
+    .hero-name {
+        font-size: 3rem;
+    }
+    .hero-specialty {
+        font-size: 1.2rem;
+    }
+    */
+    
+    .hero-description {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .scroll-down {
+        bottom: 30px;
+        font-size: 0.8rem;
+    }
+    .scroll-down::after {
+        top: 60px;
+        height: 40px;
+    }
+    @keyframes scroll-indicator {
+        0% { height: 0; top: 60px; }
+        50% { height: 40px; top: 60px; }
+        100% { height: 0; top: 100px; }
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .portfolio-item {
+        padding: 25px;
+    }
+
+    .channel-header {
+        margin-bottom: 20px;
+    }
+    .channel-icon {
+        width: 45px;
+        height: 45px;
+        margin-right: 15px;
+    }
+    .channel-name {
+        font-size: 1.4rem;
+    }
+    .channel-subs {
+        font-size: 0.85rem;
+    }
+    
+    .contact-description {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+    .cta-button {
+        padding: 15px 40px;
+        font-size: 1.1rem;
+    }
+
+    .footer {
+        padding: 40px 0;
+        font-size: 0.85rem;
+    }
+}
+
+/* さらに小さなデバイス (iPhone SEなど) 向け */
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    /* ▼▼▼ .hero-name, .hero-specialty の font-size 指定を削除 (clamp()が効くため) ▼▼▼ */
+    /*
+    .hero-name {
+        font-size: 2.5rem;
+    }
+    .hero-specialty {
+        font-size: 1rem;
+    }
+    */
+    
+    .hero-description {
+        font-size: 0.9rem;
+    }
+    .portfolio-item {
+        padding: 20px;
+    }
+    .channel-icon {
+        width: 40px;
+        height: 40px;
+    }
+    .channel-name {
+        font-size: 1.2rem;
+    }
+    .channel-subs {
+        font-size: 0.8rem;
+    }
+    .cta-button {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}
