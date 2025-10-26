@@ -4,8 +4,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // GSAPのScrollTriggerプラグインを登録
     gsap.registerPlugin(ScrollTrigger);
 
+    // --- 0. ヘッダーのアニメーション (新規追加) ---
+    // ヒーローセクションのアニメーションより先に実行
+    const headerTl = gsap.timeline();
+    headerTl.from('.site-header', {
+        y: -100, // 上からスライドイン
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+    });
+
+
     // --- 1. ヒーローセクション（自己紹介）のアニメーション ---
-    const heroTl = gsap.timeline({ delay: 0.4 }); // 少し遅らせる
+    // ヘッダーのアニメーションが終わるのを待つか、少し遅らせる
+    const heroTl = gsap.timeline({ delay: 0.5 }); // (delayを 0.4 -> 0.5 に調整)
     heroTl.from('.hero-name', {
         opacity: 0,
         y: 40, // 動きを大きく
@@ -39,8 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- 2. ポートフォリオセクションのアニメーション ---
-    
-    // ▼▼▼ 新しく追加したタイトルのアニメーション ▼▼▼
+    // (変更なし)
     gsap.from('.portfolio-section .section-title, .portfolio-section .section-subtitle', {
         scrollTrigger: {
             trigger: '.portfolio-section', // セクションが見えたら
@@ -53,9 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
         stagger: 0.2, // 2つの要素をずらして表示
         ease: 'power3.out'
     });
-    // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
-    // 既存のカードのアニメーション
+    // (既存のカードのアニメーション - 変更なし)
     gsap.from('.portfolio-item', {
         scrollTrigger: {
             trigger: '.portfolio-grid', // グリッドが見えたら
@@ -72,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- 3. お問い合わせセクションのアニメーション ---
-    
+    // (変更なし)
     gsap.from('.contact-section .section-title, .contact-section .section-subtitle', {
         scrollTrigger: {
             trigger: '.contact-section',

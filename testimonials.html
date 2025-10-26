@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta property="og:site_name" content="クリエイター石﨑">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>利用者の声 - クリエイター石﨑</title>
+    <link rel="icon" href="images/IMG_2125.JPG" type="image/png"> 
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="header-logo">クリエイター石﨑</a>
+            <nav class="header-nav">
+                <ul>
+                    <li><a href="index.html">ホーム</a></li>
+                    <li><a href="price.html">料金</a></li>
+                    <li><a href="testimonials.html" class="active">利用者の声</a></li> </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="testimonials" class="testimonials-section">
+            <div class="container">
+
+                <h2 class="section-title">TESTIMONIALS</h2>
+                <p class="section-subtitle">利用者様の声</p>
+
+                <div class="testimonial-grid">
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            長尺の素材でもかいつまんで上手くまとめるのが本当にプロです。初見の方も入りやすい編集で、過去にお願いしたものも私だけでなく、出演で関わった人も何回も何回も見て楽しんでくださってるようです。これからもぜひお願いしたいです。ありがとうございました。
+                        </p>
+                        <p class="testimonial-author">クライアント様より</p>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            初めてのお取引でしたが、こまめな連絡をしてくださり最後まで安心してお任せできました。仕上がったものも、まるでテレビを見てるようなプロのカメラワークや編集技術で、綺麗な完成品に大満足です。定期的にお願いしたいと思っています。
+                        </p>
+                        <p class="testimonial-author">クライアント様より</p>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            この度本当に素敵な編集をしてくださりありがとうございました！BGMの入れ方、丁寧な言葉遣いやカット編集などすごい編集が上手い方だなと改めて思いました。本当にありがとうございました！
+                        </p>
+                        <p class="testimonial-author">クライアント様より</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">CONTACT</h2>
+                <p class="section-subtitle">お仕事のご相談・ご依頼</p>
+                <p class="contact-description">
+                    編集のご依頼、その他ご相談など、<br>
+                    お気軽にご連絡ください。
+                </p>
+                <a href="https://x.com/cre_ishizaki" target="_blank" class="cta-button">
+                    XのDMで相談する
+                </a>
+                </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Creator Ishizaki. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // ヘッダーのアニメーション
+            gsap.from('.site-header', {
+                y: -100,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+
+            // セクションタイトル
+            gsap.from('.testimonials-section .section-title, .testimonials-section .section-subtitle', {
+                scrollTrigger: {
+                    trigger: '.testimonials-section',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 40,
+                duration: 1.0,
+                stagger: 0.2,
+                ease: 'power3.out'
+            });
+
+            // お客様の声カード
+            gsap.from('.testimonial-card', {
+                scrollTrigger: {
+                    trigger: '.testimonial-grid',
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: 'power3.out',
+                stagger: 0.15 // 1枚ずつ順番に表示
+            });
+            
+            // お問い合わせセクション
+            gsap.from('.contact-section .section-title, .contact-section .section-subtitle', {
+                scrollTrigger: {
+                    trigger: '.contact-section',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0, y: 40, duration: 1.0, stagger: 0.2, ease: 'power3.out'
+            });
+            gsap.from('.contact-description', {
+                scrollTrigger: {
+                    trigger: '.contact-description',
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0, y: 30, duration: 1.0, ease: 'power3.out'
+            });
+            gsap.from('.cta-button', {
+                scrollTrigger: {
+                    trigger: '.cta-button',
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0, scale: 0.7, duration: 1.0, ease: 'back.out(1.8)'
+            });
+        });
+    </script>
+
+</body>
+</html>

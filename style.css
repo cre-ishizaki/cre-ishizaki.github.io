@@ -75,7 +75,7 @@ body {
     /* ▼▼▼ 「初期の感じ」のグラデーション + 画像 ▼▼▼ */
     /* 上部を80%の黒で覆い、下部(100%)に向かって完全な黒にフェードさせる */
     background: 
-        linear-gradient(rgba(10, 10, 10, 0.8) 0%, rgba(10, 10, 10, 1) 100%), 
+        linear-gradient(rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 1) 100%), 
         url(https://images.unsplash.com/photo-1510519138101-570d1dca3d66?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1447);
     
     background-size: cover;
@@ -171,12 +171,18 @@ body {
     grid-column: auto; 
 }
 
+/* ▼▼▼ ここから .portfolio-item のスタイルを修正 ▼▼▼ */
 .portfolio-item {
-    background-color: var(--bg-light);
+    background: linear-gradient(135deg, var(--bg-light) 0%, #1a1a1a 100%);
     border-radius: 12px;
     padding: 35px;
-    border: 1px solid rgba(212,175,55,0.2);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(212,175,55,0.4);
+    
+    /* ▼▼▼ 通常時の光彩を強化 ▼▼▼ */
+    /* 変更前： box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(212,175,55,0.1); */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), /* 影はそのまま */
+                0 0 25px rgba(212,175,55,0.3); /* 光彩のぼかし範囲(15->25)と濃さ(0.1->0.3)をUP */
+    
     transition: transform 0.4s ease, 
                 box-shadow 0.4s ease, 
                 border-color 0.4s ease,
@@ -192,6 +198,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
+    /* 既存の光沢感を保持 */
     background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -201,11 +208,17 @@ body {
 }
 
 .portfolio-item:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 
-                0 0 25px rgba(212,175,55,0.2);
+    transform: translateY(-15px) scale(1.02);
+    
+    /* ▼▼▼ ホバー時の光彩をさらに強化 ▼▼▼ */
+    /* 変更前： box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212,175,55,0.4); */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), /* 影はそのまま */
+                0 0 40px rgba(212,175,55,0.6); /* 光彩のぼかし範囲(30->40)と濃さ(0.4->0.6)をUP */
+
     border-color: var(--accent-color);
 }
+/* ▲▲▲ .portfolio-item 関連の修正はここまで ▲▲▲ */
+
 
 .portfolio-item:hover .video-responsive iframe {
     transform: scale(1.05);
@@ -436,5 +449,567 @@ body {
     .cta-button {
         padding: 12px 30px;
         font-size: 1rem;
+    }
+}
+
+/* === 0. ヘッダー (新規追加) === */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* --bg-dark に透明度を持たせ、すりガラス効果を追加 */
+    background-color: rgba(10, 10, 10, 0.8); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 20px 0;
+    z-index: 1000;
+    /* アクセントカラーで細い境界線 */
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+    transition: background-color 0.3s ease;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.header-logo:hover {
+    color: var(--accent-color);
+}
+
+.header-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px; /* リンク間のスペース */
+}
+.header-nav li {
+    margin: 0;
+    padding: 0;
+}
+.header-nav a {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-text);
+    text-decoration: none;
+    padding-bottom: 5px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+/* ホバー時の下線アニメーション */
+.header-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+.header-nav a:hover,
+.header-nav a.active { /* .active クラスで現在地を示す */
+    color: var(--accent-color);
+}
+.header-nav a:hover::after,
+.header-nav a.active::after {
+    width: 100%;
+}
+
+/* === 1. ヒーローセクション (ヘッダー分の調整) === */
+/* ヘッダーの高さ分、コンテンツが被らないように調整 */
+/* 元の padding: 100px 20px; から padding-top を増やす */
+.hero-section {
+    padding-top: 180px; /* 100px + ヘッダー高さ約80px */
+}
+
+/* === 4. 料金ページ (新規追加・修正) === */
+.price-section {
+    padding: 120px 0;
+    padding-top: 200px; /* ヘッダーで隠れる分を調整 */
+}
+
+/* 基本料金グリッド */
+.price-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 80px; /* 区切り線との間隔を広げる */
+    max-width: 650px; /* カードの幅を少し広げる */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 基本料金カード - 高級感のあるデザイン */
+.price-card.featured-plan {
+    background: linear-gradient(135deg, var(--bg-light) 0%, #1a1a1a 100%);
+    border-radius: 15px;
+    padding: 50px;
+    border: 2px solid var(--accent-color);
+    
+    /* ▼▼▼ 通常時の光彩を強化 ▼▼▼ */
+    /* 変更前： box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212,175,55,0.4); */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), /* 影はそのまま */
+                0 0 40px rgba(212,175,55,0.5); /* 光彩のぼかし範囲(30->40)と濃さ(0.4->0.5)をUP */
+    
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+.price-card.featured-plan:hover {
+    transform: translateY(-15px) scale(1.02);
+    
+    /* ▼▼▼ ホバー時の光彩をさらに強化 ▼▼▼ */
+    /* 変更前： box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(212,175,55,0.6); */
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), /* 影はそのまま */
+                0 0 50px rgba(212,175,55,0.8); /* 光彩のぼかし範囲(40->50)と濃さ(0.6->0.8)をUP */
+}
+
+/* カードの右上と左下に模様を追加 */
+.price-card.featured-plan::before,
+.price-card.featured-plan::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(212,175,55,0.1);
+    border-radius: 50%;
+    filter: blur(20px);
+    z-index: 0;
+}
+.price-card.featured-plan::before {
+    top: -20px;
+    right: -20px;
+}
+.price-card.featured-plan::after {
+    bottom: -20px;
+    left: -20px;
+}
+
+.plan-header {
+    margin-bottom: 20px;
+    position: relative;
+}
+.plan-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem; /* タイトルを大きく */
+    color: var(--accent-color);
+    margin-bottom: 5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(212,175,55,0.5); /* 文字にも光彩 */
+}
+.plan-tag {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(212,175,55,0.15); /* ゴールドの背景タグ */
+    padding: 5px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.price-details {
+    margin-bottom: 40px; /* 価格とリストの間隔を広げる */
+    position: relative;
+}
+.plan-price {
+    font-family: var(--font-heading);
+    font-size: 4.5rem; /* 価格をさらに大きく */
+    font-weight: 800;
+    color: var(--primary-text);
+    line-height: 1;
+    display: inline-block;
+}
+.plan-price span {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--accent-color); /* 「円」をゴールドに */
+    margin-left: 5px;
+}
+.price-period {
+    font-size: 1rem;
+    color: var(--secondary-text);
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: bottom;
+    padding-bottom: 8px; /* 「/ 1案件」の位置調整 */
+}
+
+
+.features-list {
+    list-style: none;
+    max-width: 450px; /* リストの幅を調整 */
+    margin: 0 auto 40px auto; /* 下に余白 */
+    text-align: left;
+}
+.features-list li {
+    color: var(--primary-text);
+    font-size: 1.15rem; /* フォントサイズを少し大きく */
+    padding-left: 40px; /* チェックマークのスペースを広げる */
+    position: relative;
+    margin-bottom: 18px; /* 間隔を広げる */
+    line-height: 1.6;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1); /* 点線区切り */
+    padding-bottom: 15px;
+}
+.features-list li:last-child {
+    border-bottom: none; /* 最後の項目は区切り線なし */
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.features-list li::before {
+    content: '★'; /* ゴールドの星マークに変更 */
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 1.4rem; /* 星マークを大きく */
+    font-weight: 700;
+}
+
+.plan-cta {
+    display: inline-block;
+    background: linear-gradient(90deg, #D4AF37, #FFD700); /* ゴールドのグラデーションボタン */
+    color: var(--bg-dark); /* ボタンのテキストは濃い色に */
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 15px 35px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 20px rgba(212,175,55,0.4);
+}
+.plan-cta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(212,175,55,0.6);
+}
+
+
+/* 区切り線 */
+.separator {
+    width: 70%; /* 画面幅の70% */
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent-color), transparent); /* グラデーション線 */
+    margin: 80px auto; /* 上下の余白 */
+    opacity: 0.5;
+}
+
+
+/* 追加料金タイトル */
+.options-title {
+    margin-top: 60px; /* 上部のスペースを調整 */
+}
+
+/* 追加料金グリッド */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* カードサイズを少し大きく */
+    gap: 30px;
+    margin-top: 50px;
+}
+
+/* 追加料金カード */
+.option-card {
+    background-color: var(--bg-light);
+    border-radius: 12px;
+    padding: 35px; /* パディングを増やす */
+    border: 1px solid #333; /* 線の色を少し濃く */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* 影を強調 */
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.option-card:hover {
+    border-color: var(--accent-color); /* ホバーでゴールドに */
+    transform: translateY(-8px); /* ホバーで少し浮き上がる */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.option-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem; /* タイトルを大きく */
+    color: var(--primary-text);
+    margin-bottom: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.option-price {
+    font-size: 1.25rem; /* 価格を大きく */
+    color: var(--accent-color);
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+.option-description {
+    font-size: 1rem; /* 説明文を少し大きく */
+    color: var(--secondary-text);
+    line-height: 1.7;
+}
+.option-description strong {
+    color: var(--accent-color); /* 強調テキストもゴールドに */
+    font-weight: 700;
+}
+
+/* === 5. 利用者の声ページ (新規追加) === */
+.testimonials-section {
+    padding: 120px 0;
+    padding-top: 200px; /* ヘッダー分 */
+}
+
+.testimonial-grid {
+    display: grid;
+    /* 350px を最小幅として自動で折り返す */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    /* ポートフォリオカードのデザインを適用 */
+    background: linear-gradient(135deg, var(--bg-light) 0%, #1a1a1a 100%);
+    border-radius: 12px;
+    padding: 40px;
+    border: 1px solid rgba(212,175,55,0.4);
+    /* 常に光彩を放つ */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 
+                0 0 25px rgba(212,175,55,0.3);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    display: flex; /* テキストと著者名を分ける */
+    flex-direction: column;
+    justify-content: space-between; /* 著者名を下に配置 */
+}
+
+.testimonial-card:hover {
+    /* ホバーでさらに光る */
+    transform: translateY(-10px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 
+                0 0 40px rgba(212,175,55,0.6);
+}
+
+/* 引用符のスタイル */
+.testimonial-card::before {
+    content: '“';
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    color: var(--accent-color);
+    opacity: 0.3;
+    position: absolute;
+    top: 10px;
+    left: 25px;
+    line-height: 1;
+}
+
+.testimonial-text {
+    font-size: 1.05rem;
+    color: var(--primary-text);
+    line-height: 1.9;
+    margin-bottom: 25px;
+    z-index: 1; /* 引用符の上に来るように */
+}
+
+.testimonial-author {
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+    font-weight: 600;
+    text-align: right;
+    margin-top: auto; /* カードの高さが揃わない場合でも下端に配置 */
+    z-index: 1;
+}
+
+/* === 5. レスポンシブ (料金ページ) === */
+
+/* (既存の @media (max-width: 768px) の中に以下を修正・追加) */
+@media (max-width: 768px) {
+    /* (既存の .section-title などはそのまま) */
+
+    /* ヘッダー */
+    .header-logo {
+        font-size: 1.3rem;
+    }
+    .header-nav {
+        gap: 20px;
+    }
+    .header-nav a {
+        font-size: 0.9rem;
+    }
+
+    /* ヒーローセクション (スマホ用に再調整) */
+    .hero-section {
+        padding-top: 150px; 
+    }
+    
+    /* 料金ページ */
+    .price-section {
+        padding-top: 150px; /* スマホ用に調整 */
+    }
+    .price-card.featured-plan {
+        padding: 40px 30px; /* パディングを調整 */
+        border-width: 1px; /* 枠線を少し細く */
+    }
+    .plan-title {
+        font-size: 2rem;
+    }
+    .plan-price {
+        font-size: 3.5rem;
+    }
+    .plan-price span {
+        font-size: 1.5rem;
+    }
+    .features-list {
+        max-width: 100%; /* スマホでは幅いっぱいに */
+    }
+    .features-list li {
+        font-size: 1.05rem;
+        padding-left: 35px;
+        margin-bottom: 15px;
+        padding-bottom: 12px;
+    }
+    .features-list li::before {
+        font-size: 1.2rem;
+        top: 0px;
+    }
+    .plan-cta {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+    
+    .separator {
+        margin: 60px auto;
+        width: 80%;
+    }
+
+    .options-grid {
+        grid-template-columns: 1fr; /* スマホでは1列 */
+        gap: 25px;
+    }
+    .option-card {
+        padding: 30px;
+    }
+    .option-title {
+        font-size: 1.3rem;
+    }
+    .option-price {
+        font-size: 1.1rem;
+    }
+    .option-description {
+        font-size: 0.9rem;
+    }
+    /* 利用者の声 */
+    .testimonials-section {
+        padding-top: 150px;
+    }
+    .testimonial-grid {
+        grid-template-columns: 1fr; /* スマホでは1列 */
+        gap: 30px;
+    }
+    .testimonial-card {
+        padding: 30px;
+    }
+    .testimonial-card::before {
+        font-size: 4rem;
+        left: 20px;
+    }
+    .testimonial-text {
+        font-size: 1rem;
+    }
+}
+
+/* (既存の @media (max-width: 480px) の中に以下を修正・追加) */
+@media (max-width: 480px) {
+    /* (既存の .section-title などはそのまま) */
+
+    /* ヘッダー */
+    .header-logo {
+        font-size: 1.1rem;
+    }
+    .header-nav {
+        gap: 15px;
+    }
+    .header-nav a {
+        font-size: 0.8rem;
+    }
+    /* (既存の .hero-description などはそのまま) */
+
+    /* 料金ページ */
+    .price-card.featured-plan {
+        padding: 30px 20px;
+    }
+    .plan-title {
+        font-size: 1.8rem;
+    }
+    .plan-price {
+        font-size: 3rem;
+    }
+    .plan-price span {
+        font-size: 1.3rem;
+    }
+    .price-period {
+        font-size: 0.9rem;
+    }
+    .features-list li {
+        font-size: 0.95rem;
+        padding-left: 30px;
+    }
+    .features-list li::before {
+        font-size: 1.1rem;
+    }
+    .plan-cta {
+        font-size: 0.9rem;
+        padding: 10px 25px;
+    }
+    
+    .separator {
+        margin: 40px auto;
+        width: 90%;
+    }
+
+    .option-title {
+        font-size: 1.2rem;
+    }
+    .option-price {
+        font-size: 1rem;
+    }
+    /* 利用者の声 */
+    .testimonial-card {
+        padding: 30px 25px;
+    }
+}
+
+/* ▼▼▼ 税込表示のスタイルをここに追加 ▼▼▼ */
+.price-disclaimer {
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: -20px; /* サブタイトルとの間隔を詰める */
+    margin-bottom: 50px; /* オプションカードとの間隔を確保 */
+}
+
+/* スマホでの税込表示 */
+@media (max-width: 768px) {
+    .price-disclaimer {
+        font-size: 0.9rem;
+        margin-top: -10px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .price-disclaimer {
+        font-size: 0.85rem;
     }
 }
